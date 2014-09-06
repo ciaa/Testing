@@ -1,0 +1,113 @@
+*** Tester protocol ***
+
+
+1. Read tester digital inputs
+
+request format: | STX=0x02 | 0x41 | addr | ETX=0x03 |
+
+addr = input address
+       input 1 --> 0x31
+       input 2 --> 0x32
+       input 3 --> 0x33
+       input 4 --> 0x34
+       input 5 --> 0x35
+       input 6 --> 0x36
+       input 7 --> 0x37
+       input 8 --> 0x38
+
+response format: | ACK=0x06 | val | (OK)
+                 | NACK=0x15 |      (ERROR)
+
+val = input status
+      low --> 0x30
+      high --> 0x31
+
+
+2. Write tester digital outputs
+
+request format: | STX=0x02 | 0x42 | addr | val | ETX=0x03 |
+
+addr = output address
+       output 1 --> 0x31
+       output 2 --> 0x32
+       output 3 --> 0x33
+       output 4 --> 0x34
+       output 5 --> 0x35
+       output 6 --> 0x36
+       output 7 --> 0x37
+       output 8 --> 0x38
+
+val = status output
+      low --> 0x30
+      high --> 0x31
+
+response format: | ACK=0x06 |       (OK)
+                 | NACK=0x15 |      (ERROR)
+
+
+3. Read tester analogic inputs
+
+request format: | STX=0x02 | 0x43 | addr | ETX=0x03 |
+
+addr = input address
+       input 1 --> 0x31
+       input 2 --> 0x32
+       input 3 --> 0x33
+       input 4 --> 0x34
+
+response format: | ACK=0x06 | val3 | val2 | val1 | val0 | (OK)
+                 | NACK=0x15 |                            (ERROR)
+
+val[3..0] = hexa digit (val3 MSB)
+            0 --> 0x30
+            1 --> 0x31
+            2 --> 0x32
+            3 --> 0x33
+            4 --> 0x34
+            5 --> 0x35
+            6 --> 0x36
+            7 --> 0x37
+            8 --> 0x38
+            9 --> 0x39
+            A --> 0x41
+            B --> 0x42
+            C --> 0x43
+            D --> 0x44
+            E --> 0x45
+            F --> 0x46
+
+Note: for 10 bit ADC val3=0x30
+
+
+4. Write tester analogic outputs
+
+request format: 
+                | STX=0x02 | 0x44 | dir | val3 | val2 | val1 | val0 | ETX=0x03 |
+
+addr = output address
+       output 1 --> 0x31 (CIAA-NXP has 1 output analogic)
+
+val[3..0] = hexa digit (val3 MSB)
+            0 --> 0x30
+            1 --> 0x31
+            2 --> 0x32
+            3 --> 0x33
+            4 --> 0x34
+            5 --> 0x35
+            6 --> 0x36
+            7 --> 0x37
+            8 --> 0x38
+            9 --> 0x39
+            A --> 0x41
+            B --> 0x42
+            C --> 0x43
+            D --> 0x44
+            E --> 0x45
+            F --> 0x46
+
+Note: for 10 bit DAC val3=0x30
+
+response format: | ACK=0x06 |       (OK)
+                 | NACK=0x15 |      (ERROR)
+
+

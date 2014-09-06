@@ -1,0 +1,4 @@
+First, define library paths:
+
+export LD_LIBRARY_PATH=~/serial/modbus/bin/:~/serial/tester/bin/
+
